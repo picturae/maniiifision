@@ -2,6 +2,14 @@
 
 ## Setup
 
+### VSCode
+
+To make sure the development is a nice experience within VSCode we have some recommended extensions.
+
+Go to your extensions tab. And search for `@recommended`
+
+Install them and continue with the next step
+
 ### For development
 
 Make sure you are running Node LTS v18 (lts/hydrogen)
