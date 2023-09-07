@@ -5,5 +5,20 @@
   "repository": "https://github.com/picturae/maniiifision.git",
   "author": "Picturae | ManiiiFision",
   "license": "GPL-3.0",
-  "private": false
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "typescript": "^5.2.2",
+    "vue": "^3.3.4",
+    "vue-tsc": "^1.8.10"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.3.4",
+    "vite": "^4.4.9"
+  }
 }
