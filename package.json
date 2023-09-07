@@ -1,0 +1,9 @@
+{
+  "name": "maniiifision",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/picturae/maniiifision.git",
+  "author": "Picturae | ManiiiFision",
+  "license": "GPL-3.0",
+  "private": false
+}
