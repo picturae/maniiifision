@@ -25,7 +25,9 @@ export const useManifest = defineStore('manifest', {
   }),
   actions: {
     setIiifUrl(url: string) {
+      console.log('update store w/', url)
       this.iiifUrl = url
+      console.log('updated store w/', this.iiifUrl)
     },
     setManifest(manifest: any) {
       this.manifest = manifest
@@ -35,6 +37,9 @@ export const useManifest = defineStore('manifest', {
     },
   },
   getters: {
+    getIiifUrl(): string {
+      return this.iiifUrl
+    },
     getManifest(): any {
       return this.newManifest
     },
