@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { Manifest } from '@iiif/presentation-3';
 
 // You can name the return value of `defineStore()` anything you want,
 // but it's best to use the name of the store and surround it with `use`
@@ -29,10 +30,10 @@ export const useManifest = defineStore('manifest', {
       this.iiifUrl = url
       console.log('updated store w/', this.iiifUrl)
     },
-    setManifest(manifest: any) {
+    setManifest(manifest: Manifest) {
       this.manifest = manifest
     },
-    updateManifest(manifest: any) {
+    updateManifest(manifest: Manifest) {
       this.newManifest = manifest
     },
   },
