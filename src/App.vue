@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { Mirador } from './components/Mirador'
 import { GetManifest } from './components/GetManifest'
+import { HelloWorld } from './components/HelloWorld'
+import { IiifViewer } from './components/IiifViewer'
 </script>
 
 <template>
   <main>
     <GetManifest />
     <Mirador />
+    <IiifViewer />
+    <HelloWorld msg="Vite + Vue" />
   </main>
 </template>
 
