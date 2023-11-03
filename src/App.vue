@@ -8,7 +8,7 @@ import { IiifViewer } from './components/IiifViewer'
   <main>
     <GetManifest />
     <Mirador />
-    <IiifViewer />sh
+    <IiifViewer />
   </main>
 </template>
 
