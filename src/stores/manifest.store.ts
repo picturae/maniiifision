@@ -33,10 +33,12 @@ export const useManifest = defineStore('manifest', {
     updateManifest(manifest: any) {
       this.newManifest = manifest
     },
-    getManifest() {
+  },
+  getters: {
+    getManifest(): any {
       return this.newManifest
     },
-    resetManifest() {
+    resetManifest(): any {
       this.newManifest = this.manifest
 
       return this.newManifest
