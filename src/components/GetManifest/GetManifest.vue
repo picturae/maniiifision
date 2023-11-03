@@ -13,7 +13,6 @@ const updateIiif = async (event: Event) => {
     if (value) {
       manifestStore.setIiifUrl(value)
       const manifest = await getManifest(value)
-      console.log(manifest)
       manifestStore.setManifest(manifest)
     }
   }
@@ -23,7 +22,6 @@ const getManifest = async (url: string) => {
   return axios
     .get(url)
     .then(function (response: any) {
-      console.log(response.data)
       return response.data as Manifest
     })
     .catch(function (error) {
