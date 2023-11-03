@@ -10,7 +10,6 @@ import { IiifViewer } from './components/IiifViewer'
     <GetManifest />
     <Mirador />
     <IiifViewer />
-    <HelloWorld msg="Vite + Vue" />
   </main>
 </template>
 
