@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Mirador } from './components/Mirador'
 import { GetManifest } from './components/GetManifest'
-import { HelloWorld } from './components/HelloWorld'
 import { IiifViewer } from './components/IiifViewer'
 </script>
 
@@ -9,7 +8,7 @@ import { IiifViewer } from './components/IiifViewer'
   <main>
     <GetManifest />
     <Mirador />
-    <IiifViewer />
+    <IiifViewer />sh
   </main>
 </template>
 
