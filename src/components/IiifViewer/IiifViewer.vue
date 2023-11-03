@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import Mirador from 'mirador/dist/es/src/index'
+import Mirador from 'mirador/dist/es/src/index.js'
 // interface iProps {
 //   msg: string
 // }
 //
 // defineProps<iProps>()
 
-const iiif = ref('https://athenaeumcollecties.nl/collecties/gedigitaliseerde-collecties/manifest/0b266318-3487-11e6-b89c-23313efd728e')
+const iiif = ref(
+  'https://athenaeumcollecties.nl/collecties/gedigitaliseerde-collecties/manifest/0b266318-3487-11e6-b89c-23313efd728e',
+)
 
 let viewer
 
@@ -17,8 +19,7 @@ const config = {
   // },
   id: 'mirador-viewer',
   requests: {
-    preprocessors: [
-    ]
+    preprocessors: [],
   },
   // All settings can be found here: https://github.com/ProjectMirador/mirador/blob/master/src/config/settings.js
   windows: [
@@ -31,8 +32,8 @@ const config = {
       imageToolsOpen: false,
       thumbnailNavigationPosition: 'far-bottom',
       id: 'test1',
-      loadedManifest: iiif.value
-    }
+      loadedManifest: iiif.value,
+    },
   ],
   // osdConfig: {
   //   loadTilesWithAjax: true,
@@ -41,11 +42,11 @@ const config = {
   //   }
   // },
   workspaceControlPanel: {
-    enabled: true
+    enabled: true,
   },
   typography: {
-    useNextVariants: true // set so that console deprecation warning is removed
-  }
+    useNextVariants: true, // set so that console deprecation warning is removed
+  },
 }
 
 function reloadIiif(event) {
@@ -60,8 +61,8 @@ function reloadIiif(event) {
         imageToolsOpen: false,
         thumbnailNavigationPosition: 'far-bottom',
         id: 'test1',
-        loadedManifest: iiif.value
-      }
+        loadedManifest: iiif.value,
+      },
     ]
     viewer = Mirador.viewer(config, [])
     //let action = Mirador.actions.setCanvas('test1', 'https://iiif.io/api/cookbook/recipe/0009-book-1/manifest.json')
@@ -70,18 +71,17 @@ function reloadIiif(event) {
   }
 }
 
-onMounted(()=>{
+onMounted(() => {
   viewer = Mirador.viewer(config, [])
 })
-
-
-
-
 </script>
 
 <template>
-  <input v-model="iiif" placeholder="url to iiif manifest" @change="(event) => reloadIiif(event)" />
-  <div id = "mirador-viewer" />
+  <input
+    v-model="iiif"
+    placeholder="url to iiif manifest"
+    @change="(event) => reloadIiif(event)" />
+  <div id="mirador-viewer" />
 </template>
 
 <style scoped>
@@ -93,7 +93,7 @@ onMounted(()=>{
   position: relative;
 }
 input {
-  width:90%;
+  width: 90%;
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
