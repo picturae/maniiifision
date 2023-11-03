@@ -22,6 +22,6 @@ const updateIiif = (event: Event) => {
   </Container>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import './GetManifest.scss';
 </style>

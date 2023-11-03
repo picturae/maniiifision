@@ -4,6 +4,7 @@ import { Container } from '../Container/'
 
 <template>
   <Container>
-    <!-- Mirador Viewer -->
+    <h2>Image Recognition</h2>
+    <input type="button" value="GO" />
   </Container>
 </template>
