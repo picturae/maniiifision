@@ -20,18 +20,15 @@ const updateIiif = async (event: Event) => {
 }
 
 const getManifest = async (url: string) => {
-  const manifest = async () => {
-    axios
-      .get(url)
-      .then(function (response: any) {
-        console.log(response.data)
-        return response.data as Manifest
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-  }
-  return manifest()
+  return axios
+    .get(url)
+    .then(function (response: any) {
+      console.log(response.data)
+      return response.data as Manifest
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
 }
 </script>
 
