@@ -21,8 +21,8 @@ import { Manifest } from '@iiif/presentation-3'
 export const useManifest = defineStore('manifest', {
   state: () => ({
     iiifUrl: '',
-    manifest: {}, // the original one we pulled from the link
-    newManifest: {}, // the one we provide to download
+    manifest: {} as Manifest, // the original one we pulled from the link
+    newManifest: {} as Manifest, // the one we provide to download
   }),
   actions: {
     setIiifUrl(url: string) {
@@ -41,10 +41,10 @@ export const useManifest = defineStore('manifest', {
     getIiifUrl(): string {
       return this.iiifUrl
     },
-    getManifest(): any {
+    getManifest(): Manifest {
       return this.newManifest
     },
-    resetManifest(): any {
+    resetManifest(): Manifest {
       this.newManifest = this.manifest
 
       return this.newManifest
