@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { Manifest } from '@iiif/presentation-3';
+import { Manifest } from '@iiif/presentation-3'
 
 // You can name the return value of `defineStore()` anything you want,
 // but it's best to use the name of the store and surround it with `use`
