@@ -92,6 +92,7 @@ onMounted(() => {
   margin: 1em 5%;
   position: relative;
 }
+
 input {
   width: 90%;
   padding: 12px 20px;
