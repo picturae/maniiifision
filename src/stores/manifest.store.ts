@@ -17,4 +17,29 @@ import { defineStore } from 'pinia'
 //   },
 // })
 
-export const useManifest = defineStore('manifest', {})
+export const useManifest = defineStore('manifest', {
+  state: () => ({
+    iiifUrl: '',
+    manifest: {}, // the original one we pulled from the link
+    newManifest: {}, // the one we provide to download
+  }),
+  actions: {
+    setIiifUrl(url: string) {
+      this.iiifUrl = url
+    },
+    setManifest(manifest: any) {
+      this.manifest = manifest
+    },
+    updateManifest(manifest: any) {
+      this.newManifest = manifest
+    },
+    getManifest() {
+      return this.newManifest
+    },
+    resetManifest() {
+      this.newManifest = this.manifest
+
+      return this.newManifest
+    },
+  },
+})
