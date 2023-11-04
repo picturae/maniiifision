@@ -6,8 +6,12 @@ import { ref } from 'vue'
 const manifestStore = useManifest()
 
 // const items = ref([])
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 const items = ref(manifestStore.getItems)
 const imageData = ref([])
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 const terms = ref([])
 const newManifestUrl = ref('')
 
@@ -42,7 +46,12 @@ function getResult() {
     .then((response) => {
       response.json().then((data) => {
         manifestStore.updateItems(data.responses[0].localizedObjectAnnotations)
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         this.imageData = data.imageData
+        // NOTE: will stuff break if removed? Feels like writing to this. in a => function is useless
+
         data.responses[0].localizedObjectAnnotations.forEach((item: any) => {
           fetchTerms(item.name_nl)
         })
