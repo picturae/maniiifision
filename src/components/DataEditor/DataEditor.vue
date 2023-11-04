@@ -37,6 +37,7 @@ function renderImage(item: any) {
 // }
 
 function getResult() {
+  manifestStore.resetTerms()
   let url =
     'https://nijdam.nu/maniiifision-api/?imageUrl=' +
     manifestStore.getCurrentImage() +
@@ -137,7 +138,8 @@ async function fetchTerms(name: string) {
         query Terms {
           terms(
             sources: [
-              "https://query.wikidata.org/sparql#entities-all",
+              "https://data.beeldengeluid.nl/id/datadownload/0031",
+              "http://vocab.getty.edu/aat/sparql",
             ]
             query: "${name}"
             queryMode: OPTIMIZED
@@ -169,7 +171,8 @@ async function fetchTerms(name: string) {
   )
     .then((res) => res.json())
     .then((result) => {
-      manifestStore.addTerm(result.data.terms[0].result.terms.slice(0, 5))
+      manifestStore.addTerm(
+          result.data.terms.flatMap((element) => element.result.terms).slice(0, 5))
     })
 }
 </script>
