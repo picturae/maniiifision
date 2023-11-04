@@ -28,7 +28,7 @@ export const useManifest = defineStore('manifest', {
     manifest: {} as Manifest, // the original one we pulled from the link
     newManifest: {} as Manifest, // the one we provide to download
     items: {},
-    terms: [] as any[],
+    terms: [] as any,
   }),
   actions: {
     setIiifUrl(url: string) {
