@@ -23,6 +23,7 @@ const updateIiif = async (event: Event) => {
       loadIIIF(value)
     }
   }
+  manifestStore.updateItems([])
 }
 
 const getManifest = async (url: string) => {

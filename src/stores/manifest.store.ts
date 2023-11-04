@@ -25,6 +25,7 @@ export const useManifest = defineStore('manifest', {
     manifestJson: {},
     manifest: {} as Manifest, // the original one we pulled from the link
     newManifest: {} as Manifest, // the one we provide to download
+    items: {},
   }),
   actions: {
     setIiifUrl(url: string) {
@@ -46,7 +47,10 @@ export const useManifest = defineStore('manifest', {
     getCurrentImage(): string {
       //@todo get current clicked image
       return OSDReferences.get('test1').current.world.getItemAt(0).source["@id"]
-    }
+    },
+    updateItems(items) {
+      this.items = items
+    },
   },
   getters: {
     getIiifUrl(): string {
@@ -58,11 +62,13 @@ export const useManifest = defineStore('manifest', {
     getManifest(): Manifest {
       return this.newManifest
     },
+    getItems() {
+      return this.items
+    },
     resetManifest(): Manifest {
       this.newManifest = this.manifest
 
       return this.newManifest
     },
-
   },
 })

@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { Container } from '../Container/'
 import { useManifest } from '../../stores/manifest.store'
-import {ref} from "vue";
+import { ref } from 'vue'
+
+const manifestStore = useManifest()
 
 // const results = [
 //   {
@@ -19,9 +21,9 @@ import {ref} from "vue";
 // ]
 
 
-const items = ref([])
+// const items = ref([])
+const items = ref(manifestStore.getItems)
 const imageData = ref([])
-const manifestStore = useManifest()
 
 function renderImage(item) {
 
@@ -51,7 +53,7 @@ function getResult()
   //console.log(url)
   fetch(url).then(response => {
       response.json().then(data => {
-        this.items = data.responses[0].localizedObjectAnnotations
+        manifestStore.updateItems(data.responses[0].localizedObjectAnnotations)
         this.imageData = data.imageData
       })
   })
@@ -73,7 +75,7 @@ function saveAnnotations()
      }]
   }
 
-  this.items.forEach((item, index) => {
+  manifestStore.getItems.forEach((item, index) => {
     console.log(item);
     manifestStore.manifest.items[0].annotations[0].items.push({
       "id": "annotation" + index,
@@ -102,7 +104,7 @@ function saveAnnotations()
       <input type="button" value="GO" @click="getResult()" />
     </div>
     <ul>
-      <li class="bbox" v-for="item in items">
+      <li class="bbox" v-for="item in manifestStore.getItems">
         <img class="img_small" :src=renderImage(item) /> {{ item.name_nl }}
         <input type="text">
       </li>
