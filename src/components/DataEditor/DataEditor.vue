@@ -5,25 +5,11 @@ import { ref } from 'vue'
 
 const manifestStore = useManifest()
 
-// const results = [
-//   {
-//     name: 'dog',
-//     terms: ['term-A', 'term-B'],
-//   },
-//   {
-//     name: 'cat',
-//     terms: ['term-C', 'term-D'],
-//   },
-//   {
-//     name: 'bird',
-//     terms: ['term-E', 'term-F'],
-//   },
-// ]
-
 
 // const items = ref([])
 const items = ref(manifestStore.getItems)
 const imageData = ref([])
+const terms = ref([])
 
 function renderImage(item) {
 
@@ -55,6 +41,9 @@ function getResult()
       response.json().then(data => {
         manifestStore.updateItems(data.responses[0].localizedObjectAnnotations)
         this.imageData = data.imageData
+        data.responses[0].localizedObjectAnnotations.forEach((item, index) => {
+          fetchTerms(item.name_nl)
+        })
       })
   })
   .catch(error => {
@@ -64,7 +53,7 @@ function getResult()
 
 function saveAnnotations()
 {
-  
+
   let target = manifestStore.manifest.items[0].id + '#xywh='
 
   if(!manifestStore.manifest.items[0].annotations){
@@ -95,6 +84,52 @@ function saveAnnotations()
   console.log(JSON.stringify( manifestStore.manifest))
 }
 
+async function fetchTerms(name: string) {
+  return await fetch('https://termennetwerk-api.netwerkdigitaalerfgoed.nl/graphql', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: `
+        query Terms {
+          terms(
+            sources: [
+              "https://query.wikidata.org/sparql#entities-all",
+            ]
+            query: "${name}"
+            queryMode: OPTIMIZED
+          ) {
+            source {
+              name
+            }
+            result {
+              __typename
+              ... on Terms {
+                terms {
+                  uri
+                  prefLabel
+                  altLabel
+                }
+              }
+              ... on Error {
+                message
+              }
+            }
+          }
+        }
+      `,
+      variables: {
+        name: name,
+      },
+    }),
+  })
+  .then((res) => res.json())
+  .then((result) => {
+    manifestStore.addTerm(result.data.terms[0].result.terms.slice(0, 5))
+  });
+}
+
 </script>
 
 <template>
@@ -104,30 +139,20 @@ function saveAnnotations()
       <input type="button" value="GO" @click="getResult()" />
     </div>
     <ul>
-      <li class="bbox" v-for="item in manifestStore.getItems">
+      <li class="bbox" v-for="(item, index) in manifestStore.getItems">
         <img class="img_small" :src=renderImage(item) /> {{ item.name_nl }}
         <input type="text">
+        <ul class="clean-ul-lvl2">
+          <li v-for="term in manifestStore.getTerms[index]" :key="term">
+            <label class="checkbox-line">
+              <input type="checkbox" />
+              <span class="checkmark"></span>
+                {{ term.uri }} - {{ term.prefLabel[0] }} - {{ term.altLabel }}
+            </label>
+          </li>
+        </ul>
       </li>
     </ul>
-
-<!--    <ul class="clean-ul-lvl1">-->
-<!--      <li v-for="result in results" :key="result.name">-->
-<!--        <label class="checkbox-line">-->
-<!--          <input type="checkbox" />-->
-<!--          <span class="checkmark"></span>-->
-<!--          {{ result.name }}-->
-<!--        </label>-->
-<!--        <ul v-if="result.terms.length > 0" class="clean-ul-lvl2">-->
-<!--          <li v-for="term in result.terms" :key="term">-->
-<!--            <label class="checkbox-line">-->
-<!--              <input type="checkbox" />-->
-<!--              <span class="checkmark"></span>-->
-<!--              {{ term }}-->
-<!--            </label>-->
-<!--          </li>-->
-<!--        </ul>-->
-<!--      </li>-->
-<!--    </ul>-->
     <div class="go">
        <input type="button" value="Save Annotations to new IIIF manifest" @click="saveAnnotations()" />
     </div>
