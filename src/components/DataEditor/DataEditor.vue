@@ -24,6 +24,7 @@ const manifestStore = useManifest()
 // const items = ref([])
 const items = ref(manifestStore.getItems)
 const imageData = ref([])
+const newManifestUrl = ref('')
 
 function renderImage(item) {
 
@@ -64,7 +65,7 @@ function getResult()
 
 function saveAnnotations()
 {
-  
+
   let target = manifestStore.manifest.items[0].id + '#xywh='
 
   if(!manifestStore.manifest.items[0].annotations){
@@ -92,6 +93,24 @@ function saveAnnotations()
     //console.log(item);
     //console.log(index);
   });
+
+  fetch('https://nijdam.nu/maniiifision-api/manifests/save.php', {
+    method: 'POST',
+    body: JSON.stringify(manifestStore.manifest),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+  })
+      .then(function(response){
+        return response.json()})
+      .then(function(data)
+      {
+        console.log(data)
+        newManifestUrl.value = data.url;
+      })
+
+
   console.log(JSON.stringify( manifestStore.manifest))
 }
 
@@ -130,6 +149,7 @@ function saveAnnotations()
 <!--    </ul>-->
     <div class="go">
        <input type="button" value="Save Annotations to new IIIF manifest" @click="saveAnnotations()" />
+       {{ newManifestUrl }}
     </div>
   </Container>
 </template>
