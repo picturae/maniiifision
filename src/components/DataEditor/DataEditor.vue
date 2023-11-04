@@ -177,8 +177,8 @@ async function fetchTerms(name: string) {
 <template>
   <Container>
     <div class="go">
-      <h2>Image Recognition</h2>
       <input type="button" value="GO" @click="getResult()" />
+      <h2>Image Recognition</h2>
     </div>
     <ul class="clean-ul-lvl1">
       <li
