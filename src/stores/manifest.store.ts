@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { Manifest } from '@iiif/presentation-3'
-import { OSDReferences } from 'mirador/dist/es/src/plugins/OSDReferences';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { OSDReferences } from 'mirador/dist/es/src/plugins/OSDReferences'
 
 // You can name the return value of `defineStore()` anything you want,
 // but it's best to use the name of the store and surround it with `use`
@@ -26,7 +28,7 @@ export const useManifest = defineStore('manifest', {
     manifest: {} as Manifest, // the original one we pulled from the link
     newManifest: {} as Manifest, // the one we provide to download
     items: {},
-    terms: []
+    terms: [] as any[],
   }),
   actions: {
     setIiifUrl(url: string) {
@@ -34,46 +36,46 @@ export const useManifest = defineStore('manifest', {
       this.iiifUrl = url
       console.log('updated store w/', this.iiifUrl)
     },
-    setManifestJson(manifest: Object) {
-        console.log('setManifestJson')
-        this.manifestJson = manifest
+    setManifestJson(manifest: any) {
+      console.log('setManifestJson')
+      this.manifestJson = manifest
     },
     setManifest(manifest: Manifest) {
-        console.log('setManifest')
-        this.manifest = manifest
+      console.log('setManifest')
+      this.manifest = manifest
     },
     updateManifest(manifest: Manifest) {
       this.newManifest = manifest
     },
     getCurrentImage(): string {
       //@todo get current clicked image
-      return OSDReferences.get('test1').current.world.getItemAt(0).source["@id"]
+      return OSDReferences.get('test1').current.world.getItemAt(0).source['@id']
     },
-    updateItems(items) {
+    updateItems(items: any) {
       this.items = items
     },
-    setTerms(terms) {
-      this.terms = terms
+    resetTerms() {
+      this.terms = []
     },
-    addTerm(term) {
-        this.terms.push(term)
-    }
+    addTerm(term: any) {
+      this.terms.push(term)
+    },
   },
   getters: {
     getIiifUrl(): string {
       return this.iiifUrl
     },
-    getManifestJson(): Object {
+    getManifestJson(): any {
       return this.manifestJson
     },
     getManifest(): Manifest {
       return this.newManifest
     },
-    getItems() {
+    getItems(): any {
       return this.items
     },
-    getTerms() {
-        return this.terms
+    getTerms(): any[] {
+      return this.terms
     },
     resetManifest(): Manifest {
       this.newManifest = this.manifest
