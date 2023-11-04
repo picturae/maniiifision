@@ -84,7 +84,7 @@ function saveAnnotations() {
       manifestStore.manifest.items[0].annotations[0].items
     ) {
       let value = ''
-      manifestStore.getTerms[index].forEach((item: any) => {
+      manifestStore.getTerms[item.name_nl].forEach((item: any) => {
         if (item.selected) {
           value += item.prefLabel[0] + '|' + item.uri + ','
         }
