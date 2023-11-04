@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { Manifest } from '@iiif/presentation-3'
+import { OSDReferences } from 'mirador/dist/es/src/plugins/OSDReferences';
 
 // You can name the return value of `defineStore()` anything you want,
 // but it's best to use the name of the store and surround it with `use`
@@ -20,7 +21,7 @@ import { Manifest } from '@iiif/presentation-3'
 
 export const useManifest = defineStore('manifest', {
   state: () => ({
-    iiifUrl: '',
+    iiifUrl: 'https://athenaeumcollecties.nl/collecties/gedigitaliseerde-collecties/manifest/0b266318-3487-11e6-b89c-23313efd728e',
     manifest: {} as Manifest, // the original one we pulled from the link
     newManifest: {} as Manifest, // the one we provide to download
   }),
@@ -35,7 +36,7 @@ export const useManifest = defineStore('manifest', {
     },
     updateManifest(manifest: Manifest) {
       this.newManifest = manifest
-    },
+    }
   },
   getters: {
     getIiifUrl(): string {
@@ -49,5 +50,9 @@ export const useManifest = defineStore('manifest', {
 
       return this.newManifest
     },
+    getCurrentImage(): string {
+      //@todo get current clicked image
+      return OSDReferences.get('test1').current.world.getItemAt(0).source["@id"]
+    }
   },
 })

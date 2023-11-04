@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia'
 import Mirador from 'mirador/dist/es/src/index.js'
 import { useManifest } from '../../stores/manifest.store'
 import { Container } from '../Container/'
+
 // interface iProps {
 //   msg: string
 // }
@@ -18,6 +19,11 @@ const { getIiifUrl: iiif } = storeToRefs(manifestStore)
 // )
 
 let viewer
+
+// function getCurrentImage() {
+//   return
+// }
+
 
 const update = () => {
   const config = {
@@ -57,9 +63,12 @@ const update = () => {
   }
 
   viewer = Mirador.viewer(config, [])
+
 }
 
-onMounted(update)
+onMounted(() => {
+  update()
+})
 watch([iiif], update)
 </script>
 

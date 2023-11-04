@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Container } from '../Container/'
+import { useManifest } from '../../stores/manifest.store'
 
 const results = [
   {
@@ -15,13 +16,19 @@ const results = [
     terms: ['term-E', 'term-F'],
   },
 ]
+const manifestStore = useManifest()
+
+function test() {
+  console.log(manifestStore.getCurrentImage);
+}
+
 </script>
 
 <template>
   <Container>
     <div class="go">
       <h2>Image Recognition</h2>
-      <input type="button" value="GO" />
+      <input type="button" value="GO" @click="test()"/>
     </div>
     <ul class="clean-ul-lvl1">
       <li v-for="result in results" :key="result.name">
