@@ -54,8 +54,8 @@ export const useManifest = defineStore('manifest', {
     updateItems(items: any) {
       this.items = items
     },
-    setTerms(terms: any) {
-      this.terms = terms
+    resetTerms() {
+      this.terms = []
     },
     addTerm(term: any) {
       this.terms.push(term)
