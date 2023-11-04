@@ -86,9 +86,8 @@ function saveAnnotations() {
       manifestStore.manifest.items[0].annotations[0] &&
       manifestStore.manifest.items[0].annotations[0].items
     ) {
-
       let value = ''
-      manifestStore.getTerms[index].forEach((item, index) => {
+      manifestStore.getTerms[index].forEach((item: any) => {
         if (item.selected) {
           value += item.prefLabel[0] + '|' + item.uri + ','
         }
@@ -126,13 +125,6 @@ function saveAnnotations() {
       'Content-Type': 'application/json',
     },
   })
-    .then(function (response) {
-      return response.json()
-    })
-    .then(function (data) {
-      console.log(data)
-      newManifestUrl.value = data.url
-    })
     .then(function (response) {
       return response.json()
     })
@@ -221,7 +213,7 @@ async function fetchTerms(name: string) {
                 <input
                   type="checkbox"
                   @click="
-                    function () {
+                    () => {
                       term.selected = true
                     }
                   " />
