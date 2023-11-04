@@ -172,7 +172,10 @@ async function fetchTerms(name: string) {
     .then((res) => res.json())
     .then((result) => {
       manifestStore.addTerm(
-          result.data.terms.flatMap((element) => element.result.terms).slice(0, 5))
+        result.data.terms
+          .flatMap((element: any) => element.result.terms)
+          .slice(0, 5),
+      )
     })
 }
 </script>
