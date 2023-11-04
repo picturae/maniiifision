@@ -38,7 +38,6 @@ function renderImage(item: any) {
 
 function getResult() {
   manifestStore.resetItems()
-  manifestStore.resetTerms()
   let url =
     'https://nijdam.nu/maniiifision-api/?imageUrl=' +
     manifestStore.getCurrentImage() +
@@ -49,10 +48,7 @@ function getResult() {
       response.json().then((data) => {
         manifestStore.updateItems(data.responses[0].localizedObjectAnnotations)
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        this.imageData = data.imageData
-        // NOTE: will stuff break if removed? Feels like writing to this. in a => function is useless
+        imageData.value = data.imageData
 
         data.responses[0].localizedObjectAnnotations.forEach((item: any) => {
           fetchTerms(item.name_nl)
