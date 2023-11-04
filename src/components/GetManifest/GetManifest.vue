@@ -48,6 +48,7 @@ onMounted(() => {
   Example manifests:<br/>
   https://nijdam.nu/maniiifision-api/manifests/manifest.php<br/>
   https://athenaeumcollecties.nl/collecties/gedigitaliseerde-collecties/manifest/0b266318-3487-11e6-b89c-23313efd728e<br/>
+  https://iiif.io/api/cookbook/recipe/0021-tagging/manifest.json<br/>
   <Container>
     <!-- type url had native URL checking -->
     <input placeholder="url to iiif manifest" type="url" @input="updateIiif" :value="defaultUrl"/>
