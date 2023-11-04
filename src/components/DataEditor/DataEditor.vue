@@ -3,15 +3,15 @@ import { Container } from '../Container/'
 
 const results = [
   {
-    name: 'dog',
-    terms: ['term-A', 'term-B'],
+    name: 'persoon',
+    terms: [],
   },
   {
-    name: 'cat',
+    name: 'dier',
     terms: ['term-C', 'term-D'],
   },
   {
-    name: 'bird',
+    name: 'vaas',
     terms: ['term-E', 'term-F'],
   },
 ]
