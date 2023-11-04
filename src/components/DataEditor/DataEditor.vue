@@ -66,7 +66,19 @@ function saveAnnotations()
   }
 
   manifestStore.getItems.forEach((item, index) => {
-    console.log(item);
+    //console.log(manifestStore.getTerms[index]);
+
+    let value = '';
+    manifestStore.getTerms[index].forEach((item, index) => {
+       if(item.selected) {
+         value += item.prefLabel[0] + '|' + item.uri + ','
+       }
+    })
+
+    if(value == ''){
+      value = item.name_nl
+    }
+
     manifestStore.manifest.items[0].annotations[0].items.push({
       "id": "annotation" + index,
       "type": "Annotation",
@@ -75,12 +87,10 @@ function saveAnnotations()
         "type": "TextualBody",
         "language": "nl",
         "format": "text/plain",
-        "value": item.name_nl
+        "value": value
       },
       "target": target + item.coords
     })
-    //console.log(item);
-    //console.log(index);
   });
 
   fetch('https://nijdam.nu/maniiifision-api/manifests/save.php', {
@@ -95,12 +105,12 @@ function saveAnnotations()
         return response.json()})
       .then(function(data)
       {
-        console.log(data)
+       // console.log(data)
         newManifestUrl.value = data.url;
       })
 
 
-  console.log(JSON.stringify( manifestStore.manifest))
+  //console.log(JSON.stringify( manifestStore.manifest))
 }
 
 async function fetchTerms(name: string) {
@@ -149,6 +159,7 @@ async function fetchTerms(name: string) {
   });
 }
 
+
 </script>
 
 <template>
@@ -164,7 +175,7 @@ async function fetchTerms(name: string) {
         <ul class="clean-ul-lvl2">
           <li v-for="term in manifestStore.getTerms[index]" :key="term">
             <label class="checkbox-line">
-              <input type="checkbox" />
+              <input type="checkbox" @click="function(){term.selected = true}"/>
               <span class="checkmark"></span>
                 {{ term.uri }} - {{ term.prefLabel[0] }} - {{ term.altLabel }}
             </label>
