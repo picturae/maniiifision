@@ -54,11 +54,14 @@ export const useManifest = defineStore('manifest', {
     updateItems(items: any) {
       this.items = items
     },
+    resetItems() {
+      this.items = {}
+    },
     resetTerms() {
       this.terms = []
     },
-    addTerm(term: any) {
-      this.terms.push(term)
+    addTerm(name: string, term: any) {
+      this.terms[name] = term
     },
   },
   getters: {

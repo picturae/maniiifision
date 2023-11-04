@@ -37,6 +37,7 @@ function renderImage(item: any) {
 // }
 
 function getResult() {
+  manifestStore.resetItems()
   manifestStore.resetTerms()
   let url =
     'https://nijdam.nu/maniiifision-api/?imageUrl=' +
@@ -183,6 +184,7 @@ async function fetchTerms(name: string) {
     .then((res) => res.json())
     .then((result) => {
       manifestStore.addTerm(
+        name,
         result.data.terms
           .flatMap((element: any) => element.result.terms)
           .slice(0, 5),
@@ -208,7 +210,9 @@ async function fetchTerms(name: string) {
             <input type="text" />
           </span>
           <ul class="clean-ul-lvl2">
-            <li v-for="term in manifestStore.getTerms[index]" :key="term">
+            <li
+              v-for="term in manifestStore.getTerms[item.name_nl]"
+              :key="term">
               <label class="checkbox-line">
                 <input
                   type="checkbox"
