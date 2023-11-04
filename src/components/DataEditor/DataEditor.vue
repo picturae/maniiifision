@@ -2,6 +2,11 @@
 import { Container } from '../Container/'
 import { useManifest } from '../../stores/manifest.store'
 
+const image =
+  'https://www.iesa.edu/sites/default/files/cultural-heritage-management.jpg'
+
+const backend = 'https://nijdam.nu/maniiifision-api/?imageUrl='
+
 const results = [
   {
     name: 'dog',
@@ -16,19 +21,29 @@ const results = [
     terms: ['term-E', 'term-F'],
   },
 ]
+
 const manifestStore = useManifest()
 
 function test() {
-  console.log(manifestStore.getCurrentImage);
+  console.log(manifestStore.getCurrentImage)
 }
 
+async function performImageRecognition(event) {
+  const response = await fetch(backend + image)
+  const responses = await response.json()
+  console.log(responses.responses[0].localizedObjectAnnotations)
+  responses.responses[0].localizedObjectAnnotations.forEach((element) => {
+    console.log(element)
+  })
+}
 </script>
 
 <template>
   <Container>
     <div class="go">
       <h2>Image Recognition</h2>
-      <input type="button" value="GO" @click="test()"/>
+      <input @click="test" type="button" value="test" />
+      <input @click="performImageRecognition" type="button" value="performImageRecognition" />
     </div>
     <ul class="clean-ul-lvl1">
       <li v-for="result in results" :key="result.name">
