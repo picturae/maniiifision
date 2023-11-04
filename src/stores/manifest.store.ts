@@ -58,5 +58,9 @@ export const useManifest = defineStore('manifest', {
 
       return this.newManifest
     },
+    getCurrentImage(): string {
+      //@todo get current clicked image
+      return OSDReferences.get('test1').current.world.getItemAt(0).source["@id"]
+    }
   },
 })
