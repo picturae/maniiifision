@@ -77,18 +77,30 @@ function saveAnnotations() {
 
   manifestStore.getItems.forEach((item: any, index: number) => {
     console.log(item)
-    manifestStore.manifest.items[0].annotations[0].items.push({
-      id: 'annotation' + index,
-      type: 'Annotation',
-      motivation: 'commenting',
-      body: {
-        type: 'TextualBody',
-        language: 'nl',
-        format: 'text/plain',
-        value: item.name_nl,
-      },
-      target: target + item.coords,
-    })
+    if (
+      manifestStore.manifest &&
+      manifestStore.manifest.items &&
+      manifestStore.manifest.items[0] &&
+      manifestStore.manifest.items[0].annotations &&
+      manifestStore.manifest.items[0].annotations[0] &&
+      manifestStore.manifest.items[0].annotations[0].items
+    ) {
+      manifestStore.manifest.items[0].annotations[0].items.push({
+        id: 'annotation' + index,
+        type: 'Annotation',
+        motivation: 'commenting',
+        body: {
+          type: 'TextualBody',
+          language: 'nl',
+          format: 'text/plain',
+          value: item.name_nl,
+        },
+        target: target + item.coords,
+      })
+    } else {
+      console.warn('Something went wrong with the manifest')
+    }
+
     //console.log(item);
     //console.log(index);
   })
