@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Logo } from './components/Logo'
 import { DataEditor } from './components/DataEditor'
 import { GetManifest } from './components/GetManifest'
 import { IiifViewer } from './components/IiifViewer'
@@ -6,6 +7,7 @@ import { IiifViewer } from './components/IiifViewer'
 
 <template>
   <main>
+    <Logo />
     <GetManifest />
     <IiifViewer />
     <DataEditor />

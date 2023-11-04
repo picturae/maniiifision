@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { onMounted, watch } from 'vue'
 import { storeToRefs } from 'pinia'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import Mirador from 'mirador/dist/es/src/index.js'
 import { useManifest } from '../../stores/manifest.store'
 import { Container } from '../Container/'
@@ -18,12 +20,13 @@ const { getIiifUrl: iiif } = storeToRefs(manifestStore)
 //   'https://athenaeumcollecties.nl/collecties/gedigitaliseerde-collecties/manifest/0b266318-3487-11e6-b89c-23313efd728e',
 // )
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 let viewer
 
 // function getCurrentImage() {
 //   return
 // }
-
 
 const update = () => {
   const config = {
@@ -63,7 +66,6 @@ const update = () => {
   }
 
   viewer = Mirador.viewer(config, [])
-
 }
 
 onMounted(() => {
