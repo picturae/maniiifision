@@ -9,6 +9,7 @@ const manifestStore = useManifest()
 const items = ref(manifestStore.getItems)
 const imageData = ref([])
 const terms = ref([])
+const newManifestUrl = ref('')
 
 function renderImage(item: any) {
   let width = imageData.value[0]
@@ -82,6 +83,23 @@ function saveAnnotations() {
     //console.log(item);
     //console.log(index);
   })
+
+  fetch('https://nijdam.nu/maniiifision-api/manifests/save.php', {
+    method: 'POST',
+    body: JSON.stringify(manifestStore.manifest),
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(function (response) {
+      return response.json()
+    })
+    .then(function (data) {
+      console.log(data)
+      newManifestUrl.value = data.url
+    })
+
   console.log(JSON.stringify(manifestStore.manifest))
 }
 
@@ -170,6 +188,7 @@ async function fetchTerms(name: string) {
         type="button"
         value="Save Annotations to new IIIF manifest"
         @click="saveAnnotations()" />
+      {{ newManifestUrl }}
     </div>
   </Container>
 </template>
