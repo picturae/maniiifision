@@ -24,7 +24,6 @@ let viewer
 //   return
 // }
 
-
 const update = () => {
   const config = {
     // annotation: {
@@ -63,7 +62,6 @@ const update = () => {
   }
 
   viewer = Mirador.viewer(config, [])
-
 }
 
 onMounted(() => {
