@@ -21,7 +21,7 @@ import { OSDReferences } from 'mirador/dist/es/src/plugins/OSDReferences';
 
 export const useManifest = defineStore('manifest', {
   state: () => ({
-    iiifUrl: 'https://athenaeumcollecties.nl/collecties/gedigitaliseerde-collecties/manifest/0b266318-3487-11e6-b89c-23313efd728e',
+    iiifUrl: 'https://nijdam.nu/maniiifision-api/manifests/manifest.php',
     manifest: {} as Manifest, // the original one we pulled from the link
     newManifest: {} as Manifest, // the one we provide to download
   }),
@@ -36,6 +36,10 @@ export const useManifest = defineStore('manifest', {
     },
     updateManifest(manifest: Manifest) {
       this.newManifest = manifest
+    },
+    getCurrentImage(): string {
+      //@todo get current clicked image
+      return OSDReferences.get('test1').current.world.getItemAt(0).source["@id"]
     }
   },
   getters: {
@@ -50,9 +54,6 @@ export const useManifest = defineStore('manifest', {
 
       return this.newManifest
     },
-    getCurrentImage(): string {
-      //@todo get current clicked image
-      return OSDReferences.get('test1').current.world.getItemAt(0).source["@id"]
-    }
+
   },
 })

@@ -108,3 +108,13 @@
     background-color: rgba(255, 255, 255, 0.9);
   }
 }
+.img_small {
+  width: 150px;
+  border-radius: 1em;
+}
+.bbox {
+  border: 1px solid gray;
+  border-radius: 1em;
+  list-style: none;
+  text-align: left;
+}

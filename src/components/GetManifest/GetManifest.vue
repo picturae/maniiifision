@@ -31,6 +31,9 @@ const getManifest = async (url: string) => {
 </script>
 
 <template>
+  Example manifests:<br/>
+  https://nijdam.nu/maniiifision-api/manifests/manifest.php<br/>
+  https://athenaeumcollecties.nl/collecties/gedigitaliseerde-collecties/manifest/0b266318-3487-11e6-b89c-23313efd728e<br/>
   <Container>
     <!-- type url had native URL checking -->
     <input placeholder="url to iiif manifest" type="url" @input="updateIiif" />
