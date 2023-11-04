@@ -26,6 +26,7 @@ export const useManifest = defineStore('manifest', {
     manifest: {} as Manifest, // the original one we pulled from the link
     newManifest: {} as Manifest, // the one we provide to download
     items: {},
+    terms: []
   }),
   actions: {
     setIiifUrl(url: string) {
@@ -51,6 +52,12 @@ export const useManifest = defineStore('manifest', {
     updateItems(items) {
       this.items = items
     },
+    setTerms(terms) {
+      this.terms = terms
+    },
+    addTerm(term) {
+        this.terms.push(term)
+    }
   },
   getters: {
     getIiifUrl(): string {
@@ -64,6 +71,9 @@ export const useManifest = defineStore('manifest', {
     },
     getItems() {
       return this.items
+    },
+    getTerms() {
+        return this.terms
     },
     resetManifest(): Manifest {
       this.newManifest = this.manifest
