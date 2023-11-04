@@ -5,93 +5,96 @@ import { ref } from 'vue'
 
 const manifestStore = useManifest()
 
-
 // const items = ref([])
 const items = ref(manifestStore.getItems)
 const imageData = ref([])
 const terms = ref([])
 
-function renderImage(item) {
+function renderImage(item: any) {
+  let width = imageData.value[0]
+  let height = imageData.value[1]
 
-    let width = imageData.value[0]
-    let height = imageData.value[1]
+  //x,y,w,h
+  let x = Math.round(item.boundingPoly.normalizedVertices[0].x * width)
+  let y = Math.round(item.boundingPoly.normalizedVertices[0].y * height)
+  let w = Math.round(item.boundingPoly.normalizedVertices[2].x * width) - x
+  let h = Math.round(item.boundingPoly.normalizedVertices[2].y * height) - y
 
-    //x,y,w,h
-    let x = Math.round(item.boundingPoly.normalizedVertices[0].x * width)
-    let y = Math.round(item.boundingPoly.normalizedVertices[0].y * height)
-    let w = Math.round(item.boundingPoly.normalizedVertices[2].x * width) - x
-    let h = Math.round(item.boundingPoly.normalizedVertices[2].y * height) - y
+  let coords = x + ',' + y + ',' + w + ',' + h
 
-    let coords = x + ',' + y + ',' + w + ',' + h
+  item.coords = coords
 
-    item.coords = coords
-
-    return manifestStore.getCurrentImage() + '/' + coords + '/max/0/default.jpg'
+  return manifestStore.getCurrentImage() + '/' + coords + '/max/0/default.jpg'
 }
 
 // function test() {
 //   console.log(manifestStore.getCurrentImage);
 // }
 
-function getResult()
-{
-  let url = 'https://nijdam.nu/maniiifision-api/?imageUrl=' + manifestStore.getCurrentImage() + '/full/max/0/default.jpg'
+function getResult() {
+  let url =
+    'https://nijdam.nu/maniiifision-api/?imageUrl=' +
+    manifestStore.getCurrentImage() +
+    '/full/max/0/default.jpg'
   //console.log(url)
-  fetch(url).then(response => {
-      response.json().then(data => {
+  fetch(url)
+    .then((response) => {
+      response.json().then((data) => {
         manifestStore.updateItems(data.responses[0].localizedObjectAnnotations)
         this.imageData = data.imageData
-        data.responses[0].localizedObjectAnnotations.forEach((item, index) => {
+        data.responses[0].localizedObjectAnnotations.forEach((item: any) => {
           fetchTerms(item.name_nl)
         })
       })
-  })
-  .catch(error => {
-      console.error('Error:', error);
-  })
+    })
+    .catch((error) => {
+      console.error('Error:', error)
+    })
 }
 
-function saveAnnotations()
-{
-
+function saveAnnotations() {
   let target = manifestStore.manifest.items[0].id + '#xywh='
 
-  if(!manifestStore.manifest.items[0].annotations){
-     manifestStore.manifest.items[0].annotations=[{
-       id: "annot1",
-       type: "AnnotationPage",
-       items: []
-     }]
+  if (!manifestStore.manifest.items[0].annotations) {
+    manifestStore.manifest.items[0].annotations = [
+      {
+        id: 'annot1',
+        type: 'AnnotationPage',
+        items: [],
+      },
+    ]
   }
 
-  manifestStore.getItems.forEach((item, index) => {
-    console.log(item);
+  manifestStore.getItems.forEach((item: any, index: number) => {
+    console.log(item)
     manifestStore.manifest.items[0].annotations[0].items.push({
-      "id": "annotation" + index,
-      "type": "Annotation",
-      "motivation": "commenting",
-      "body": {
-        "type": "TextualBody",
-        "language": "nl",
-        "format": "text/plain",
-        "value": item.name_nl
+      id: 'annotation' + index,
+      type: 'Annotation',
+      motivation: 'commenting',
+      body: {
+        type: 'TextualBody',
+        language: 'nl',
+        format: 'text/plain',
+        value: item.name_nl,
       },
-      "target": target + item.coords
+      target: target + item.coords,
     })
     //console.log(item);
     //console.log(index);
-  });
-  console.log(JSON.stringify( manifestStore.manifest))
+  })
+  console.log(JSON.stringify(manifestStore.manifest))
 }
 
 async function fetchTerms(name: string) {
-  return await fetch('https://termennetwerk-api.netwerkdigitaalerfgoed.nl/graphql', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      query: `
+  return await fetch(
+    'https://termennetwerk-api.netwerkdigitaalerfgoed.nl/graphql',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: `
         query Terms {
           terms(
             sources: [
@@ -119,17 +122,17 @@ async function fetchTerms(name: string) {
           }
         }
       `,
-      variables: {
-        name: name,
-      },
-    }),
-  })
-  .then((res) => res.json())
-  .then((result) => {
-    manifestStore.addTerm(result.data.terms[0].result.terms.slice(0, 5))
-  });
+        variables: {
+          name: name,
+        },
+      }),
+    },
+  )
+    .then((res) => res.json())
+    .then((result) => {
+      manifestStore.addTerm(result.data.terms[0].result.terms.slice(0, 5))
+    })
 }
-
 </script>
 
 <template>
@@ -138,23 +141,35 @@ async function fetchTerms(name: string) {
       <h2>Image Recognition</h2>
       <input type="button" value="GO" @click="getResult()" />
     </div>
-    <ul>
-      <li class="bbox" v-for="(item, index) in manifestStore.getItems">
-        <img class="img_small" :src=renderImage(item) /> {{ item.name_nl }}
-        <input type="text">
-        <ul class="clean-ul-lvl2">
-          <li v-for="term in manifestStore.getTerms[index]" :key="term">
-            <label class="checkbox-line">
-              <input type="checkbox" />
-              <span class="checkmark"></span>
-                {{ term.uri }} - {{ term.prefLabel[0] }} - {{ term.altLabel }}
-            </label>
-          </li>
-        </ul>
+    <ul class="clean-ul-lvl1">
+      <li
+        v-for="(item, index) in manifestStore.getItems"
+        :key="`${item}-${index}`">
+        <img class="img_small" :src="renderImage(item)" />
+        <div>
+          <span>
+            {{ item.name_nl }}
+            <input type="text" />
+          </span>
+          <ul class="clean-ul-lvl2">
+            <li v-for="term in manifestStore.getTerms[index]" :key="term">
+              <label class="checkbox-line">
+                <input type="checkbox" />
+                <span class="checkmark"></span>
+                <div>
+                  {{ term.uri }} - {{ term.prefLabel[0] }} - {{ term.altLabel }}
+                </div>
+              </label>
+            </li>
+          </ul>
+        </div>
       </li>
     </ul>
     <div class="go">
-       <input type="button" value="Save Annotations to new IIIF manifest" @click="saveAnnotations()" />
+      <input
+        type="button"
+        value="Save Annotations to new IIIF manifest"
+        @click="saveAnnotations()" />
     </div>
   </Container>
 </template>
