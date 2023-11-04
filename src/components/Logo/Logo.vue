@@ -4,6 +4,7 @@ import { Container } from '../Container'
 
 <template>
   <Container>
+    <h1 hidden>Maniiifision</h1>
     <div>
       <svg
         width="146.72519"
